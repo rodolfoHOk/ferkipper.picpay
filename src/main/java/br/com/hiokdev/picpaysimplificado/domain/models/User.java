@@ -100,4 +100,8 @@ public class User {
     }
   }
 
+  public String getFullName() {
+    return this.getFirstName() + " " + this.getLastName();
+  }
+
 }

@@ -2,13 +2,18 @@ package br.com.hiokdev.picpaysimplificado.api.dtos;
 
 import br.com.hiokdev.picpaysimplificado.domain.models.Transaction;
 import br.com.hiokdev.picpaysimplificado.domain.models.User;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public record TransactionDTO(
+  @NotNull @PositiveOrZero
   BigDecimal value,
+  @NotNull
   UUID payer,
+  @NotNull
   UUID payee
 ) {
 

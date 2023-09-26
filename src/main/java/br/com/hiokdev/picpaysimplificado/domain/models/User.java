@@ -1,4 +1,4 @@
-package br.com.hiokdev.picpaysimplificado.domain.model;
+package br.com.hiokdev.picpaysimplificado.domain.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

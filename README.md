@@ -10,6 +10,7 @@
 - PostgreSQL
 - Docker
 - Flyway (DB migrations)
+- OpenAPI (Swagger UI)
 
 ### Bibliotecas
 
@@ -20,5 +21,12 @@
 - PostgreSQL Driver
 - Lombok
 - Flyway
+- springdoc-openapi-starter-webmvc-ui
 
-## https://www.youtube.com/watch?v=QXunBiLq2SM&list=WL&index=2 1:05:32
+## API URL
+
+- http://localhost:8080
+
+## OpenAPI Docs
+
+- http://localhost:8080/swagger-ui/index.html

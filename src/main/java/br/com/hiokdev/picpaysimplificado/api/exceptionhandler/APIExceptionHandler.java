@@ -9,11 +9,16 @@ import br.com.hiokdev.picpaysimplificado.domain.exceptions.UnauthorizedTransacti
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class APIExceptionHandler {
+
+  private ObjectError objectError;
 
   @ExceptionHandler(UserAlreadyExistsException.class)
   public ResponseEntity<ExceptionDTO> handleUserAlreadyExistsException(UserAlreadyExistsException exception) {
@@ -73,6 +78,23 @@ public class APIExceptionHandler {
       exception.getMessage()
     );
     return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(exceptionDTO);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<ExceptionDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+    ExceptionDTO exceptionDTO = new ExceptionDTO(
+      HttpStatus.BAD_REQUEST.value(),
+      HttpStatus.BAD_REQUEST.name(),
+      exception.getBindingResult().getAllErrors().stream().map(objectError -> {
+        String name = objectError.getObjectName();
+        if (objectError instanceof FieldError) {
+          name = ((FieldError) objectError).getField();
+        }
+        String message = objectError.getDefaultMessage();
+        return name + ": " + message;
+      }).toList().toString()
+    );
+    return ResponseEntity.badRequest().body(exceptionDTO);
   }
 
   @ExceptionHandler(Exception.class)

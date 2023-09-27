@@ -2,6 +2,7 @@ package br.com.hiokdev.picpaysimplificado.domain.services;
 
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.BusinessException;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.EntityNotFoundException;
+import br.com.hiokdev.picpaysimplificado.domain.exceptions.UserAlreadyExistsException;
 import br.com.hiokdev.picpaysimplificado.domain.models.User;
 import br.com.hiokdev.picpaysimplificado.domain.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,6 +35,16 @@ public class UserService {
 
   public User save(User user) {
     user.validate();
+
+    Optional<User> existsUser = userRepository.findUserByDocument(user.getDocument());
+    if (existsUser.isPresent()) {
+      throw new UserAlreadyExistsException("Já existe usuário com o documento informado");
+    }
+    existsUser = userRepository.findUserByEmail(user.getEmail());
+    if (existsUser.isPresent()) {
+      throw new UserAlreadyExistsException("Já existe usuário com o email informado");
+    }
+
     return userRepository.save(user);
   }
 

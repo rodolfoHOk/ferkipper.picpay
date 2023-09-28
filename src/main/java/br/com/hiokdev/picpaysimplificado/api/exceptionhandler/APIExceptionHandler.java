@@ -7,6 +7,7 @@ import br.com.hiokdev.picpaysimplificado.domain.exceptions.InsufficientBalanceEx
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.NotificationException;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.UnauthorizedTransactionException;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.UserAlreadyExistsException;
+import br.com.hiokdev.picpaysimplificado.domain.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -22,6 +23,16 @@ public class APIExceptionHandler {
 
   @ExceptionHandler(UserAlreadyExistsException.class)
   public ResponseEntity<ExceptionDTO> handleUserAlreadyExistsException(UserAlreadyExistsException exception) {
+    ExceptionDTO exceptionDTO = new ExceptionDTO(
+      HttpStatus.BAD_REQUEST.value(),
+      HttpStatus.BAD_REQUEST.name(),
+      exception.getMessage()
+    );
+    return ResponseEntity.badRequest().body(exceptionDTO);
+  }
+
+  @ExceptionHandler(ValidationException.class)
+  public ResponseEntity<ExceptionDTO> handleValidationException(ValidationException exception) {
     ExceptionDTO exceptionDTO = new ExceptionDTO(
       HttpStatus.BAD_REQUEST.value(),
       HttpStatus.BAD_REQUEST.name(),

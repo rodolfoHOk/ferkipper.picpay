@@ -3,6 +3,7 @@ package br.com.hiokdev.picpaysimplificado.domain.services;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.BusinessException;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.EntityNotFoundException;
 import br.com.hiokdev.picpaysimplificado.domain.exceptions.UserAlreadyExistsException;
+import br.com.hiokdev.picpaysimplificado.domain.exceptions.ValidationException;
 import br.com.hiokdev.picpaysimplificado.domain.models.User;
 import br.com.hiokdev.picpaysimplificado.domain.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,6 @@ public class UserService {
     if (sender.isMerchant()) {
       throw new BusinessException("Usuário do tipo lojista não está autorizado a fazer transações");
     }
-
     sender.validateBalance(amount);
   }
 
@@ -34,7 +34,11 @@ public class UserService {
   }
 
   public User save(User user) {
-    user.validate();
+    try {
+      user.validate();
+    } catch (BusinessException e) {
+      throw new ValidationException(e.getMessage());
+    }
 
     Optional<User> existsUser = userRepository.findUserByDocument(user.getDocument());
     if (existsUser.isPresent()) {

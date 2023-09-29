@@ -26,6 +26,16 @@
 - springdoc-openapi-starter-webmvc-ui
 - RestAssured
 
+## Como rodar
+
+- requisito: ter java 21 instalado
+- requisito: docker e docker compose instalado
+- clonar este repositorio
+- docker compose up -d
+- aguardar container do postgresql subir
+- ./mvnw package
+- java -jar target/picpay-simplificado-0.0.1-SNAPSHOT.jar
+
 ## API URL
 
 - http://localhost:8080

@@ -43,8 +43,6 @@ public class TransactionServiceTest {
     Mockito.when(userService.findById(sender.getId())).thenReturn(sender);
     Mockito.when(userService.findById(receiver.getId())).thenReturn(receiver);
     Mockito.doNothing().when(userService).validateUserTypeAndBalance(sender, transaction.getAmount());
-    Mockito.when(userService.create(sender)).thenReturn(sender);
-    Mockito.when(userService.create(receiver)).thenReturn(receiver);
     Mockito.when(transactionRepository.save(transaction)).thenReturn(savedTransaction);
 
     Transaction result = transactionService.create(transaction);

@@ -11,6 +11,7 @@
 - Docker
 - Flyway (DB migrations)
 - OpenAPI (Swagger UI)
+- Junit 5
 
 ### Bibliotecas
 
@@ -18,10 +19,12 @@
 - Spring Data JPA
 - Spring Validation
 - Spring Dev Tools
+- Spring Test
 - PostgreSQL Driver
 - Lombok
 - Flyway
 - springdoc-openapi-starter-webmvc-ui
+- RestAssured
 
 ## API URL
 

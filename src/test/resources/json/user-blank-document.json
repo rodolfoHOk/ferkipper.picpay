@@ -1,0 +1,9 @@
+{
+  "firstName": "User 3",
+  "lastName": "Test",
+  "document": "",
+  "email": "user3@email.com",
+  "password": "123456",
+  "userType": "COMMON",
+  "balance": 2000.00
+}

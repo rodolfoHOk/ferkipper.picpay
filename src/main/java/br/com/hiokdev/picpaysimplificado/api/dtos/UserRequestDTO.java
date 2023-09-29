@@ -1,5 +1,6 @@
 package br.com.hiokdev.picpaysimplificado.api.dtos;
 
+import br.com.hiokdev.picpaysimplificado.core.validation.EnumValid;
 import br.com.hiokdev.picpaysimplificado.domain.models.User;
 import br.com.hiokdev.picpaysimplificado.domain.models.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,8 +29,8 @@ public record UserRequestDTO(
   @NotBlank @Size(min = 6)
   String password,
   @Schema(example = "COMMON")
-  @NotNull
-  UserType userType,
+  @EnumValid(enumClass = UserType.class)
+  String userType,
   @Schema(example = "3000.67")
   @NotNull @PositiveOrZero
   BigDecimal balance
@@ -42,7 +43,7 @@ public record UserRequestDTO(
     domainEntity.setDocument(dto.document());
     domainEntity.setEmail(dto.email());
     domainEntity.setPassword(dto.password());
-    domainEntity.setUserType(dto.userType());
+    domainEntity.setUserType(UserType.valueOf(dto.userType()));
     domainEntity.setBalance(dto.balance());
 
     return domainEntity;

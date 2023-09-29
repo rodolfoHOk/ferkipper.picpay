@@ -11,7 +11,8 @@
 - Docker
 - Flyway (DB migrations)
 - OpenAPI (Swagger UI)
-- Junit 5
+- Junit 5 (Unit tests)
+- RestAssured (Integration tests)
 
 ### Bibliotecas
 
@@ -23,7 +24,7 @@
 - PostgreSQL Driver
 - Lombok
 - Flyway
-- springdoc-openapi-starter-webmvc-ui
+- Springdoc (Swagger UI)
 - RestAssured
 
 ## Como rodar

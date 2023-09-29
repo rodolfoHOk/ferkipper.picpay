@@ -108,5 +108,5 @@ public class TransactionServiceTest {
     user.setUserType(UserType.MERCHANT);
     return user;
   }
-  
+
 }

@@ -38,7 +38,7 @@ public class UserController {
   @PostMapping
   public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO inputDTO) {
     User newUser = UserRequestDTO.toDomainEntity(inputDTO);
-    User savedUser = userService.save(newUser);
+    User savedUser = userService.create(newUser);
     return ResponseEntity.status(201).body(UserResponseDTO.toRepresentationModel(savedUser));
   }
 

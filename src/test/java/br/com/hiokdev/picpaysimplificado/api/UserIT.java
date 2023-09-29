@@ -19,7 +19,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -195,7 +194,7 @@ public class UserIT {
 
   private void populateDatabase() {
     User user1 = new User(
-      UUID.randomUUID(),
+      null,
       "User 1",
       "Test",
       "123456789-01",
@@ -206,7 +205,7 @@ public class UserIT {
     );
 
     User user2 = new User(
-      UUID.randomUUID(),
+      null,
       "User 2",
       "Test",
       "123456789-02",

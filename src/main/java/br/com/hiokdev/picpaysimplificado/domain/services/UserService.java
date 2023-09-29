@@ -33,7 +33,7 @@ public class UserService {
       new EntityNotFoundException("Usuário não encontrado com o id informado"));
   }
 
-  public User save(User user) {
+  public User create(User user) {
     try {
       user.validate();
     } catch (BusinessException e) {
@@ -47,6 +47,16 @@ public class UserService {
     existsUser = userRepository.findUserByEmail(user.getEmail());
     if (existsUser.isPresent()) {
       throw new UserAlreadyExistsException("Já existe usuário com o email informado");
+    }
+
+    return userRepository.save(user);
+  }
+
+  public User update(User user) {
+    try {
+      user.validate();
+    } catch (BusinessException e) {
+      throw new ValidationException(e.getMessage());
     }
 
     return userRepository.save(user);

@@ -90,7 +90,7 @@ public class UserServiceTest {
     userToSave.setId(null);
     User expectedUser = getValidUser();
     Mockito.when(userRepository.save(userToSave)).thenReturn(expectedUser);
-    User savedUser = userService.save(userToSave);
+    User savedUser = userService.create(userToSave);
     Assertions.assertEquals(savedUser, expectedUser);
   }
 
@@ -98,7 +98,7 @@ public class UserServiceTest {
   public void shouldThrowValidationExceptionWhenSaveWithABlankFirstName() {
     User userToSave = getValidUser();
     userToSave.setFirstName("");
-    Assertions.assertThrows(ValidationException.class, () -> userService.save(userToSave));
+    Assertions.assertThrows(ValidationException.class, () -> userService.create(userToSave));
   }
 
   @Test
@@ -107,7 +107,7 @@ public class UserServiceTest {
     Mockito.when(userRepository.findUserByDocument(userToSave.getDocument())).thenReturn(Optional.of(userToSave));
     UserAlreadyExistsException exception = Assertions.assertThrows(
       UserAlreadyExistsException.class,
-      () -> userService.save(userToSave)
+      () -> userService.create(userToSave)
     );
     Assertions.assertEquals(exception.getMessage(), "Já existe usuário com o documento informado");
   }
@@ -118,7 +118,7 @@ public class UserServiceTest {
     Mockito.when(userRepository.findUserByEmail(userToSave.getEmail())).thenReturn(Optional.of(userToSave));
     UserAlreadyExistsException exception = Assertions.assertThrows(
       UserAlreadyExistsException.class,
-      () -> userService.save(userToSave)
+      () -> userService.create(userToSave)
     );
     Assertions.assertEquals(exception.getMessage(), "Já existe usuário com o email informado");
   }

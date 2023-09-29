@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,8 +22,8 @@ public class TransactionService {
 
   private final TransactionRepository transactionRepository;
   private final UserService userService;
-  private final RestTemplate restTemplate;
   private final NotificationService notificationService;
+  //  private final RestTemplate restTemplate;
 
   @Transactional
   public Transaction create(Transaction transaction) {
@@ -47,9 +46,9 @@ public class TransactionService {
     sender.setBalance(sender.getBalance().subtract(newTransaction.getAmount()));
     receiver.setBalance(receiver.getBalance().add(newTransaction.getAmount()));
 
-    Transaction transactionSaved = transactionRepository.save(newTransaction);
     userService.save(sender);
     userService.save(receiver);
+    Transaction transactionSaved = transactionRepository.save(newTransaction);
 
     notificationService.send(sender, "Transação realizada com sucesso");
     notificationService.send(receiver, "Transação recebida com sucesso");
@@ -62,7 +61,11 @@ public class TransactionService {
 
 //    ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity(url, Map.class);
     Map<String, String> mockResponse = new HashMap<>();
-    mockResponse.put("message", "Autorizado");
+    if (sender == null || value.compareTo(new BigDecimal("10000")) > 0) {
+      mockResponse.put("message", "Não Autorizado");
+    } else {
+      mockResponse.put("message", "Autorizado");
+    }
     ResponseEntity<Map<String, String>> authorizationResponse = ResponseEntity.ok(mockResponse);
 
     if (authorizationResponse.getStatusCode() == HttpStatus.OK && authorizationResponse.getBody() != null) {
